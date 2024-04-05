@@ -12,9 +12,9 @@ class WebtonicUI extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp(
       title: "Webtonics UI Library",
-      // theme: ThemeData.dark(
+      theme: ThemeData(
       //   useMaterial3: true
-      // ),
+      ),
       home: const Home(),
     );
   }

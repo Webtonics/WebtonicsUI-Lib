@@ -15,6 +15,20 @@ class _LoginState extends State<Login> {
   String username = '';
   String passwordc = '';
 
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordcController = TextEditingController();
+
+  @override
+  void initState() {
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    usernameController = TextEditingController();
+    passwordcController = TextEditingController();
+    super.initState();
+  }
+
   String? validateEmail(String? value){
     if (value!.isEmpty) {
       return "This cannot be empty";
@@ -72,9 +86,9 @@ class _LoginState extends State<Login> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // //Image 
-                SizedBox(
+                const SizedBox(
                   width: 600,
-                  child: const Image(image: NetworkImage("https://app.corestoc.com/assets/uploads/logo/theme.jpg"))),
+                  child: Image(image: NetworkImage("https://app.corestoc.com/assets/uploads/logo/theme.jpg"))),
                 //form
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -86,11 +100,12 @@ class _LoginState extends State<Login> {
                         children: [
                           //username
                           TextFormField(
-                            
-                            decoration: const InputDecoration(
+                            controller: usernameController,
+                            decoration:  InputDecoration(
                               labelText: "Username",
                               hintText: "JohnDoyle",
-                              border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(23),),
+                              errorText: validateusername(usernameController.text),
+                              border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(23),),
                               )
                             ),
                             validator: validateusername,
@@ -103,10 +118,12 @@ class _LoginState extends State<Login> {
                   
                           // email
                           TextFormField(
-                            decoration: const InputDecoration(
+                            controller: emailController,
+                            decoration:  InputDecoration(
+                              errorText: validateEmail(emailController.text),
                               labelText: "Email",
                               hintText: "JohnDoyle@example.com",
-                              border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(23),),
+                              border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(23),),
                               )
                             ),
                             validator: validateEmail,
@@ -119,10 +136,12 @@ class _LoginState extends State<Login> {
                                 
                           // password
                           TextFormField(
-                            decoration: const InputDecoration(
+                            controller: passwordController,
+                            decoration:  InputDecoration(
                               labelText: "Password",
+                              errorText: validatePassword(passwordController.text),
                               hintText: "***********",
-                              border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(23),),
+                              border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(23),),
                               )
                             ),
                             obscureText: true,
@@ -136,13 +155,15 @@ class _LoginState extends State<Login> {
                                 
                           // confirm password
                           TextFormField(
+                            controller: passwordcController,
                             decoration: InputDecoration(
+                              errorText: validatePassword(passwordc),
                               labelText: "Confirm Password",
                               hintText: "***********",
                               border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(23),),
                               ),
                               helperText: "must contain at least ",
-                              enabled: password.isEmpty ? false : true
+                              enabled: passwordController.text.isEmpty ? true : true
                             ),
                             obscureText: true,
                             validator: validatepasswordc,
